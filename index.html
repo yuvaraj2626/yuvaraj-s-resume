@@ -1,8 +1,937 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<title>blank page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(270deg, rgb(7, 7, 58), rgb(12, 12, 100), rgb(71, 12, 154));
+            background-size: 400% 400%;
+            animation: gradientAnimation 12s ease infinite;
+            font-family: "Roboto Mono", monospace;
+            font-optical-sizing: auto;
+            font-style: normal;
+            cursor: url('my-mouse-pointer.cur'), auto;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(42, 11, 116, 0.9); /* Semi-transparent header for better contrast */
+        }
+
+        nav .navbar-nav .nav-link {
+            color: white !important;
+            margin-right: 15px;
+        }
+
+        nav .navbar-nav .nav-link:hover {
+            background-color: #2a0b74;
+            border-radius: 5px;
+        }
+
+        section {
+            padding: 60px 0;
+            color: white;
+        }
+
+        section h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        section p, ul, div {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .job {
+            margin-bottom: 40px;
+        }
+
+        .container {
+            padding: 0 15px;
+        }
+
+        img {
+            height: 300px;
+            width: 330px;
+            border-radius: 155px;
+            box-shadow: 0px 30px 100px 1px rgb(67, 27, 199);
+        }
+
+        /* Typewriter Animation */
+        .typewriter {
+            font-size: 24px;
+            color: #ffffff;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #fff;
+        }
+
+        .typewriter-text {
+            display: inline;
+            white-space: nowrap;
+            color: rgb(255, 255, 255);
+            font-size: 30px;
+            text-shadow:
+                10px 5px 10px #a87ce3                
+        }
+
+        .typewriter-text:hover{
+            color: rgb(97, 244, 255);
+            text-shadow: none;
+        }
+        /* Glowing effect on hover */
+        .glow-on-hover:hover {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(255, 255, 255, 0.8);
+            color: #ffffff;
+        }
+        .card {
+            color: #2a0b74;
+        }
+        .card:hover{
+            box-shadow: 2px 3px 40px 30px black;
+        }
+        .rounded-start{
+            width: 240px;
+            border-radius: 0px;
+        }
+        .email-field{
+            margin: 30px;
+        }
+        .phone-field{
+            margin: 30px;
+        }
+
+
+        .animated-button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 16px 36px;
+        border: 4px solid;
+        border-color: transparent;
+        font-size: 16px;
+        background-color: inherit;
+        border-radius: 100px;
+        font-weight: 600;
+        color: rgb(121, 210, 240);
+        box-shadow: 0 0 0 2px rgb(121, 210, 240);
+        cursor:pointer;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button svg {
+        position: absolute;
+        width: 24px;
+        fill: rgb(121, 210, 240);
+        z-index: 9;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button .arr-1 {
+        right: 16px;
+        }
+
+        .animated-button .arr-2 {
+        left: -25%;
+        }
+
+        .animated-button .circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-color: rgb(121, 210, 240);
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button .text {
+        position: relative;
+        z-index: 1;
+        transform: translateX(-12px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animated-button:hover {
+        box-shadow: 0 0 0 12px transparent;
+        color: #212121;
+        border-radius: 12px;
+        }
+
+        .animated-button:hover .arr-1 {
+        right: -25%;
+        }
+
+        .animated-button:hover .arr-2 {
+        left: 16px;
+        }
+
+        .animated-button:hover .text {
+        transform: translateX(12px);
+        }
+
+        .animated-button:hover svg {
+        fill: #212121;
+        }
+
+        .animated-button:active {
+        scale: 0.95;
+        box-shadow: 0 0 0 4px greenyellow;
+        }
+
+        .animated-button:hover .circle {
+        width: 220px;
+        height: 220px;
+        opacity: 1;
+        }
+
+        #contact-field{
+            border: #ffffff;
+            box-shadow: 0px 2px 100px white;
+            padding: 40px;
+            margin: 30px;
+            background-color: #a87ce3;
+        }
+        p{
+            text-align: justify;
+            margin: 20px;
+            line-height: 1.5px;
+            
+        }
+      
+        textarea{
+            margin: 10PX;
+            border-radius: 5px;
+            width: 500px;
+            height: 180px;
+        }
+        .button {
+            --primary: #ff5569; /* Accent color */
+            --neutral-1: #2e2e2e; /* Dark background */
+            --neutral-2: #1a1a1a; /* Darker background */
+            --radius: 14px;
+            margin: 30px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+            border: none;
+            box-shadow: 0 0.5px 0.5px 1px rgba(0, 0, 0, 0.2),
+                0 10px 20px rgba(0, 0, 0, 0.2), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            padding: 20px;
+            height: 68px;
+            font-family: "Galano Grotesque", Poppins, Montserrat, sans-serif;
+            font-style: normal;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff; /* Text color */
+            background: var(--neutral-1); /* Button background */
+            }
+            .button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+                0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+            }
+            .button:active {
+            transform: scale(1);
+            box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+                0 10px 3px -3px rgba(0, 0, 0, 0.2);
+            }
+            .button:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            border: 2.5px solid transparent;
+            background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45))
+                border-box;
+            z-index: 0;
+            transition: all 0.4s ease;
+            }
+            .button:hover::after {
+            transform: scale(1.05, 1.1);
+            box-shadow: inset 0 -1px 3px 0 rgba(50, 50, 50, 1); /* Adjusted shine colour to a darker tone */
+            }
+
+            .button::before {
+            content: "";
+            inset: 7px 6px 6px 6px;
+            position: absolute;
+            background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+            border-radius: 30px;
+            filter: blur(0.5px);
+            z-index: 2;
+            }
+            .state p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            }
+            .state .icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            transform: scale(1.25);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            }
+            .state .icon svg {
+            overflow: visible;
+            }
+
+            /* Outline */
+            .outline {
+            position: absolute;
+            border-radius: inherit;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            inset: -2px -3.5px;
+            }
+            .outline::before {
+            content: "";
+            position: absolute;
+            inset: -100%;
+            background: conic-gradient(
+                from 180deg,
+                transparent 60%,
+                rgb(22, 22, 22) 80%,
+                transparent 100%
+            );
+            animation: spin 2s linear infinite;
+            animation-play-state: paused;
+            }
+            @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+            }
+            .button:hover .outline {
+            opacity: 1;
+            }
+            .button:hover .outline::before {
+            animation-play-state: running;
+            }
+
+            /* Letters */
+            .state p span {
+            display: block;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+            }
+            .button:hover p span {
+            opacity: 1;
+            animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+            }
+            .button:focus p span {
+            opacity: 1;
+            animation: disapear 0.6s ease forwards calc(var(--i) * 0.03s);
+            }
+            @keyframes wave {
+            30% {
+                opacity: 1;
+                transform: translateY(4px) translateX(0) rotate(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-3px) translateX(0) rotate(0);
+                color: var(--primary);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) rotate(0);
+            }
+            }
+            @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px) translateX(5px) rotate(-90deg);
+                color: var(--primary);
+                filter: blur(5px);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(4px) translateX(0) rotate(0);
+                filter: blur(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-3px) translateX(0) rotate(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) rotate(0);
+            }
+            }
+            @keyframes disapear {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateX(5px) translateY(20px);
+                color: var(--primary);
+                filter: blur(5px);
+            }
+            }
+
+            /* Plane */
+            .state--default .icon svg {
+            animation: land 0.6s ease forwards;
+            }
+            .button:hover .state--default .icon {
+            transform: rotate(45deg) scale(1.25);
+            }
+            .button:focus .state--default svg {
+            animation: takeOff 0.8s linear forwards;
+            }
+            .button:focus .state--default .icon {
+            transform: rotate(0) scale(1.25);
+            }
+            @keyframes takeOff {
+            0% {
+                opacity: 1;
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(70px) rotate(45deg) scale(2);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(160px) rotate(45deg) scale(0);
+            }
+            }
+            @keyframes land {
+            0% {
+                transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+                opacity: 0;
+                filter: blur(3px);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+            }
+
+            
+
+           /* From Uiverse.io by SelfMadeSystem */ 
+            .container {
+            cursor: pointer;
+            margin-left: 27px;
+            }
+
+            .checkbox {
+            display: none;
+            }
+
+            .container svg {
+            overflow: visible;
+            }
+
+            .path {
+            fill: none;
+            stroke: rgb(48, 3, 87);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+            stroke-dasharray: 241 9999999;
+            stroke-dashoffset: 0;
+            }
+
+            .container input:checked ~ svg .path {
+            stroke-dasharray: 70.5096664428711 9999999;
+            stroke-dashoffset: -262.2723388671875;
+            }
+
+            .state--default .icon:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            height: 2px;
+            width: 0;
+            left: -5px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5));
+            }
+            .button:focus .state--default .icon:before {
+            animation: contrail 0.8s linear forwards;
+            }
+            @keyframes contrail {
+            0% {
+                width: 0;
+                opacity: 1;
+            }
+            8% {
+                width: 15px;
+            }
+            60% {
+                opacity: 0.7;
+                width: 80px;
+            }
+            100% {
+                opacity: 0;
+                width: 160px;
+            }
+            }
+
+            /* States */
+            .state {
+            padding-left: 29px;
+            z-index: 2;
+            display: flex;
+            position: relative;
+            }
+            .state--default span:nth-child(4) {
+            margin-right: 5px;
+            }
+            .state--sent {
+            display: none;
+            }
+            .state--sent svg {
+            transform: scale(1.25);
+            margin-right: 8px;
+            }
+            .button:focus .state--default {
+            position: absolute;
+            }
+            .button:focus .state--sent {
+            display: flex;
+            }
+            .button:focus .state--sent span {
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards calc(var(--i) * 0.2s);
+            }
+            .button:focus .state--sent .icon svg {
+            opacity: 0;
+            animation: appear 1.2s ease forwards 0.8s;
+            }
+            @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: scale(4) rotate(-40deg);
+                color: var(--primary);
+                filter: blur(4px);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(0.6);
+                filter: blur(1px);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            }
+
+
+    </style>
 </head>
+
 <body>
-visit <a href = "server.js">click to find my resume</a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">My Resume</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#skills">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#experience">Experience</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sections -->
+    <div class="container">
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>About Me</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="profile-image">
+                        <img src="profimg.jpg">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="typewriter" data-aos" data-aos" data-aos" data-aos" data-aos" data-aos" data-aos-duration="1500" data-aos-delay="900">
+                        I am <span class="typewriter-text"></span><label for=""></label>
+                    </div><br>
+                    <div class="hover-text" id="dynamicText">I am Yuvaraj R, I am pursuing a degree in Btech Computer Science with a specialization in cyber Security and Iot. I have a keen interest in ethical hacking, and cybersecurity. I also possess impeccable skills when it comes to Iot projects. I have created and collaborated to create various Major and Minor projects, including one that is under evaluation for IEEE. I possess sportsmanship skills, which is visible in my patience to do work, and the friendly competitive attitude that I have.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>Skills</h1>
+                </div><br>
+                <div class="col-md-12">
+                    <div class="card-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="arduino.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">ARDUINO UNO</h5>
+                                        <p class="card-text">Arduino is an open-source electronics platform that simplifies hardware-software integration, enabling users to create interactive projects. It features microcontroller boards that can sense inputs (e.g., light, temperature) and control outputs (e.g., motors, LEDs), using its easy-to-learn programming language and integrated development environment (IDE).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="frontend.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">FRONT-END WEB DEVELOPMENT</h5>
+                                        <p class="card-text">
+                                            HTML (HyperText Markup Language) structures web content by defining elements like headings, paragraphs, links, and media, forming the foundation of webpages. CSS (Cascading Style Sheets) styles and designs these pages by controlling layout, colors, fonts, and responsiveness, enhancing the visual presentation of HTML content.</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="mongodb.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">mongoDB</h5>
+                                        <p class="card-text">
+                                            MongoDB is a popular NoSQL database that stores data in flexible, JSON-like documents, allowing for scalable, high-performance applications. It supports dynamic schemas, making it ideal for handling unstructured or semi-structured data. MongoDB excels in distributed data storage, horizontal scaling, and real-time data processing.
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            
+                
+                <h1>Projects</h1>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="job">
+                            <h2>Major Project</h2>
+                            <p>Iot Enabled Cold-Storage monitoring system | 2024 - completed</p>
+                            <p>The Iot enabled cold-storage monitoring system is an iot project that monitors and checks the quality of fruits(Apple) in the cold-storage.
+                                It has various advantages. <br>
+                                <ul>
+                                    <li>The Iot Enabled Cold Storage monitoring system , is a cost-efficient storage system that can be used to store and monitor the quality of fruits.</li>
+                                    <li>It is more accurate and precise compared to other already existing systems.</li>
+                                </ul>
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="job">
+                            <h2>Minor Projects</h2>
+                            <p>pharmaceutical products management system | 2023</p>
+                            <p>Student Management system | 2023</p>
+                            <p>phonebook Application | 2024</p>
+                            <p>Soil Moisture sensor and intimator using arduino | 2024</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>SHARE YOUR THOUGHTS</h2>
+           
+            <form>
+
+                <fieldset id="contact-field">
+
+
+                    <div class="row">
+                        <textarea id="message" placeholder="type your message here!"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" id="phone" placeholder="mobile">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="email" placeholder="emailID">
+                            
+                        </div>
+                        
+
+                    </div>
+                    
+                    <center>
+                        <button class="button" id="send">
+                            <div class="outline"></div>
+                            <div class="state state--default">
+                              <div class="icon">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  height="1em"
+                                  width="1em"
+                                >
+                                  <g style="filter: url(#shadow)">
+                                    <path
+                                      fill="currentColor"
+                                      d="M14.2199 21.63C13.0399 21.63 11.3699 20.8 10.0499 16.83L9.32988 14.67L7.16988 13.95C3.20988 12.63 2.37988 10.96 2.37988 9.78001C2.37988 8.61001 3.20988 6.93001 7.16988 5.60001L15.6599 2.77001C17.7799 2.06001 19.5499 2.27001 20.6399 3.35001C21.7299 4.43001 21.9399 6.21001 21.2299 8.33001L18.3999 16.82C17.0699 20.8 15.3999 21.63 14.2199 21.63ZM7.63988 7.03001C4.85988 7.96001 3.86988 9.06001 3.86988 9.78001C3.86988 10.5 4.85988 11.6 7.63988 12.52L10.1599 13.36C10.3799 13.43 10.5599 13.61 10.6299 13.83L11.4699 16.35C12.3899 19.13 13.4999 20.12 14.2199 20.12C14.9399 20.12 16.0399 19.13 16.9699 16.35L19.7999 7.86001C20.3099 6.32001 20.2199 5.06001 19.5699 4.41001C18.9199 3.76001 17.6599 3.68001 16.1299 4.19001L7.63988 7.03001Z"
+                                    ></path>
+                                    <path
+                                      fill="currentColor"
+                                      d="M10.11 14.4C9.92005 14.4 9.73005 14.33 9.58005 14.18C9.29005 13.89 9.29005 13.41 9.58005 13.12L13.16 9.53C13.45 9.24 13.93 9.24 14.22 9.53C14.51 9.82 14.51 10.3 14.22 10.59L10.64 14.18C10.5 14.33 10.3 14.4 10.11 14.4Z"
+                                    ></path>
+                                  </g>
+                                  <defs>
+                                    <filter id="shadow">
+                                      <fedropshadow
+                                        flood-opacity="0.5"
+                                        stdDeviation="0.6"
+                                        dy="1"
+                                        dx="0"
+                                      ></fedropshadow>
+                                    </filter>
+                                  </defs>
+                                </svg>
+                              </div>
+                              <p>
+                                <span style="--i:0">S</span>
+                                <span style="--i:1">e</span>
+                                <span style="--i:2">n</span>
+                                <span style="--i:3">d</span>
+                                <span style="--i:4">M</span>
+                                <span style="--i:5">e</span>
+                                <span style="--i:6">s</span>
+                                <span style="--i:7">s</span>
+                                <span style="--i:8">a</span>
+                                <span style="--i:9">g</span>
+                                <span style="--i:10">e</span>
+                              </p>
+                            </div>
+                            <div class="state state--sent">
+                              <div class="icon">
+                                <svg
+                                  stroke="black"
+                                  stroke-width="0.5px"
+                                  width="1em"
+                                  height="1em"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g style="filter: url(#shadow)">
+                                    <path
+                                      d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+                                      fill="currentColor"
+                                    ></path>
+                                    <path
+                                      d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z"
+                                      fill="currentColor"
+                                    ></path>
+                                  </g>
+                                </svg>
+                              </div>
+                              <p>
+                                <span style="--i:5">S</span>
+                                <span style="--i:6">e</span>
+                                <span style="--i:7">n</span>
+                                <span style="--i:8">t</span>
+                              </p>
+                            </div>
+                          </button>
+                          
+                    </center>
+                      
+                </fieldset>
+            </form>
+            
+        </section>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Typewriter Animation -->
+    <script>
+    document.getElementById("send").addEventListener("click", async function(e) {
+        e.preventDefault();  // Prevent default form submission behavior
+
+        const message = document.getElementById("message").value;
+        
+        if (!message) {
+        alert("Please enter a message.");
+        return;
+        }
+
+        const response = await fetch('/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+        });
+
+        if (response.ok) {
+        alert("Message sent successfully!");
+        } else {
+        alert("Failed to send message.");
+        }
+    });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+        const textElement = document.getElementById('dynamicText');
+        const words = textElement.innerText.split(' ');
+        textElement.innerHTML = '';
+
+        words.forEach(word => {
+            let span = document.createElement('span');
+            span.innerText = word + ' ';
+            span.classList.add('glow-on-hover'); // Add glow effect class
+            textElement.appendChild(span);
+        });
+    });
+
+    
+        const textElement = document.getElementById('dynamicText');
+        textElement.addEventListener('mouseover', function (e) {
+            if (e.target.tagName === 'SPAN') {
+                e.target.classList.add('glow');
+            }
+        });
+
+    textElement.addEventListener('mouseout', function (e) {
+        if (e.target.tagName === 'SPAN') {
+            e.target.classList.remove('glow');
+        }
+    });
+        document.addEventListener("DOMContentLoaded", () => {
+        const textArray = ["a cyber security enthusiast", "an ethical hacker"];
+        let typingIndex = 0;
+        let arrayIndex = 0;
+        const typewriterText = document.querySelector(".typewriter-text");
+
+        function type() {
+            if (typingIndex < textArray[arrayIndex].length) {
+                typewriterText.textContent += textArray[arrayIndex].charAt(typingIndex);
+                typingIndex++;
+                setTimeout(type, 50); // Speed of typing
+            } else {
+                setTimeout(() => {
+                    deleteText();
+                }, 1000); // Wait 1 second before deleting
+            }
+        }
+
+        function deleteText() {
+            if (typingIndex > 0) {
+                typewriterText.textContent = textArray[arrayIndex].substring(0, typingIndex - 1);
+                typingIndex--;
+                setTimeout(deleteText, 50); // Speed of deleting
+            } else {
+                arrayIndex = (arrayIndex + 1) % textArray.length; // Move to next text, or loop back to first
+                setTimeout(type, 500); // Wait before starting the typing again
+            }
+        }
+
+        type();
+    });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = document.querySelectorAll("nav ul li a");
+
+            // Smooth scrolling
+            links.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const target = document.querySelector(this.getAttribute("href"));
+                    window.scrollTo({
+                        top: target.offsetTop,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>
